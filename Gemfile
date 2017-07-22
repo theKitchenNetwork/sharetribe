@@ -17,6 +17,7 @@ gem 'jquery-rails', '~> 4.3.1'
 # gem 'heroku' install the Heroku toolbelt (https://toolbelt.heroku.com/) instead (as gem had some problems)
 gem "passenger", '~> 5.1.4'
 
+gem 'pg'
 gem "mysql2", '~> 0.4.6'
 gem 'haml', '~> 5.0.1'
 gem 'sass', '~> 3.4.24'
@@ -24,6 +25,8 @@ gem 'rest-client', '~> 2.0.2'
 
 gem 'paperclip', '~> 5.1.0'
 gem 'delayed_paperclip', '~> 3.0.1'
+
+gem 'dotenv-rails'
 
 gem 'aws-sdk', '~> 2.9.25'
 gem "will_paginate", '~> 3.1.5'
