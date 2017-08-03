@@ -16,3 +16,11 @@ adminMember = CommunityMembership.create(person_id: admin.id, community_id: comm
 member = CommunityMembership.create(person_id: user1.id, community_id: community.id, consent: "accepted")
 member2 = CommunityMembership.create(person_id: user2.id, community_id: community.id, consent: "accepted")
 member3 = CommunityMembership.create(person_id: user3.id, community_id: community.id, consent: "accepted")
+
+# TransactionProcess
+tp = TransactionProcess.create(community_id: 1, process: 'none')
+pre = TransactionProcess.create(community_id: 1, process: 'preauthorize')
+
+# ListingShape
+
+ls = ListingShape.create(community_id: 1, transaction_process_id: 1, price_enabled: true, shipping_enabled: false, availability: "none", name: "test", name_tr_key: "listing_shape.name", action_button_tr_key: "listing_shape.action_button")
