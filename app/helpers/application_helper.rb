@@ -1,4 +1,6 @@
 # encoding: utf-8
+
+# rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
 
   # Removes whitespaces from HAML expressions
@@ -442,13 +444,13 @@ module ApplicationHelper
       :name => "listing_shapes"
     }
 
-    if PaypalHelper.paypal_active?(@current_community.id)
+    if PaypalHelper.paypal_active?(@current_community.id) || StripeHelper.stripe_feature_enabled?(@current_community.id)
       links << {
         :topic => :configure,
-        :text => t("admin.communities.paypal_account.paypal_admin_account"),
+        :text => t("admin.communities.settings.payment_preferences"),
         :icon_class => icon_class("payments"),
-        :path => admin_paypal_preferences_path(),
-        :name => "paypal_account"
+        :path => admin_payment_preferences_path(),
+        :name => "payment_preferences"
       }
     end
 
@@ -523,15 +525,13 @@ module ApplicationHelper
     payment_type = MarketplaceService::Community::Query.payment_type(@current_community.id)
 
     if payment_type.present?
-
       links << {
         :id => "settings-tab-payments",
         :text => t("layouts.settings.payments"),
         :icon_class => icon_class("payments"),
-        :path => paypal_account_settings_payment_path(@current_user),
+        :path => person_payment_settings_path(@current_user),
         :name => "payments"
       }
-
     end
 
     return links
@@ -660,4 +660,10 @@ module ApplicationHelper
       content_for :extra_javascript do js end
     end
   end
+
+  def format_local_date(value)
+    format = t("datepicker.format").gsub(/([md])[md]+/, '%\1').gsub(/yyyy/, '%Y')
+    value.present? ? value.strftime(format) : nil
+  end
 end
+# rubocop:enable Metrics/ModuleLength

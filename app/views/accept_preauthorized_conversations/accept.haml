@@ -78,7 +78,15 @@
           %span.conversation-shipping-price-value
             = MoneyViewUtils.to_humanized(shipping_price)
 
-      - if payment_gateway == :paypal
+      - if payment_gateway == :paypal || payment_gateway == :stripe
+        - if gateway_fee.present? && gateway_fee > 0
+          .conversation-stripe-fee-wrapper
+            %span.conversation-stripe-fee-label
+              = t("conversations.accept.stripe-fee_label")
+            %span.conversation-stripe-fee-value
+              = "-#{MoneyViewUtils.to_humanized(gateway_fee)}"
+
+ 
         .conversation-total-wrapper
           %span.conversation-total-label
             = t("conversations.accept.total_label")
@@ -105,6 +113,20 @@
       - content_for :extra_javascript do
         :javascript
           $('#paypal_fee_info_link').click(function() { $('#paypal_fee_info_content').lightbox_me({centered: true, zIndex: 1000000}); });
+
+    - if payment_gateway == :stripe
+      %p
+        = t("conversations.accept.stripe_fee_info", fee_info_link_id: "stripe_fee_info_link").html_safe
+
+      = render layout: "layouts/lightbox", locals: { id: "stripe_fee_info_content"} do
+        %h2= t("common.stripe_fee_info.title")
+        - text_with_line_breaks_html_safe do
+          - link_to_stripe = link_to(t("common.stripe_fee_info.link_to_stripe_text"), stripe_fees_url, target: "_blank")
+          = t("common.stripe_fee_info.body_text", link_to_stripe: link_to_stripe).html_safe
+
+      - content_for :extra_javascript do
+        :javascript
+          $('#stripe_fee_info_link').click(function() { $('#stripe_fee_info_content').lightbox_me({centered: true, zIndex: 1000000}); });
 
 
   = render partial: "transactions/shipping_address", locals: { shipping_address: shipping_address }
