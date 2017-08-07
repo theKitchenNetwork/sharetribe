@@ -1,0 +1,30 @@
+# Locally override default configurations
+#
+# This file overrides configurations set in `config/config.defaults.yml`.
+# Keep in mind that environment variables override setting in this file.
+#
+# Usage:
+#
+# Copy this file from `config/config.example.yml` to `config/config.yml`
+#
+
+development:
+  # Add local `development` environment configuration overrides here
+    # database: kitchennetwork
+    adapter: mysql2
+    database: devkitchen
+    username: <%=ENV["DB_USERNAME"]%>
+    password: <%=ENV["DB_PASSWORD"]%>
+
+
+test:
+  # Add local `test` environment configuration overrides here
+    adapter: mysql2
+    database: testkitchen
+    username: <%=ENV["DB_USERNAME"]%>
+    password: <%=ENV["DB_PASSWORD"]%>
+staging:
+  # Add local `staging` environment configuration overrides here
+
+production:
+  # Add local `production` environment configuration overrides here
