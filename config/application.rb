@@ -3,7 +3,6 @@
 require_relative 'boot'
 
 require 'rails/all'
-
 # These needed to load the config.yml
 require File.expand_path('../config_loader', __FILE__)
 
@@ -20,6 +19,10 @@ require File.expand_path('../../lib/method_deprecator', __FILE__)
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+require 'stripe'
+
+Stripe.api_key= ENV["STRIPE_API_KEY"]
 
 # Require Transit. This needs to be done manually, because the gem name
 # (transit-ruby) doesn't match to the module name (Transit) and that's
